@@ -44,11 +44,21 @@ travel(X, Y) :-
 %go(paris,losAngeles)))
 %to the query travel(valmont,losAngeles,X).
 
-go(X, Y) :-
+go(X, Y, T) :-
+    (
     byCar(X, Y);
     byTrain(X, Y);
-    byPlane(X, Y).
+    byPlane(X, Y)
+),
+    T=go(X,Y).
 
-
+go(X, Y, T) :-
+    (
+    byCar(X, Z);
+    byTrain(X, Z);
+    byPlane(X, Z)
+),
+    T=go(X,Z, U),
+    go(Z, Y, U).
 
 
