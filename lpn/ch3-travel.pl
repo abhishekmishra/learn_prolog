@@ -61,4 +61,27 @@ go(X, Y, T) :-
     T=go(X,Z, U),
     go(Z, Y, U).
 
+% Extend the predicate travel/3 so that it not only tells you the route
+% to take to get from one place to another, but also how you have to
+% travel. That is, the new program should let us know, for each stage of
+% the voyage, whether we need to travel by car, train, or plane.
 
+go2(X, Y, H, T) :-
+    (   (   byCar(X, Y),
+            H = car);
+    (   byTrain(X, Y),
+        H = train);
+    (   byPlane(X, Y),
+        H = plane)),
+    T = go2(X, Y, H).
+
+go2(X, Y, H, T) :-
+    (
+    (   byCar(X, Z),
+        H = car);
+    (   byTrain(X, Z),
+        H = train);
+    (   byPlane(X, Z),
+        H = plane)),
+    T = go2(X, Z, H, U),
+    go2(Z, Y, I, U).
